@@ -1,7 +1,6 @@
 "use client"
 import { Button } from '@/components/ui/button'
 import axios from 'axios'
-import { headers } from 'next/headers'
 import React, { ChangeEvent, FormEvent, useState } from 'react'
 
 const CreateImage = () => {
@@ -30,24 +29,13 @@ const CreateImage = () => {
       }
     }
   return (
-    <div>
     <form onSubmit={handleSubmit}>
         <input type="file" name='image' accept="image/*" onChange={handleChange}/>
-        {image && (
-        <div>
-          <p>Selected Image:</p>
-          <img
-            src={URL.createObjectURL(image)}
-            alt="Selected"
-            style={{ maxWidth: '100%', maxHeight: '200px' }}
-          />
-        </div>
-      )}
-      <div>
-        <Button type="submit">Upload</Button>
-      </div>
+        {
+          image&&
+          <Button type="submit">Upload</Button>
+        }
     </form>
-    </div>
   )
 }
 

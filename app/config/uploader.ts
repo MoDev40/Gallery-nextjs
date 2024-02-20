@@ -1,4 +1,4 @@
-import v2 from "@/app/config/cloudinary"
+import cloudinary from "@/app/config/cloudinary"
 
 const uploader = async(file :File,folder:string)=>{
     return new Promise(async (resolve,reject)=>{
@@ -6,7 +6,7 @@ const uploader = async(file :File,folder:string)=>{
     const buffer = await file.arrayBuffer()
     const bytes = Buffer.from(buffer)
 
-    v2.uploader.upload_stream({
+    cloudinary.uploader.upload_stream({
         resource_type:"image",
         folder:folder,
     },(error,result)=>{

@@ -21,7 +21,7 @@ model User {
 }
 
 model Image {
-  id             String   @id @default(dbgenerated("concat('usr_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
+  id             String   @id @default(dbgenerated("concat('img_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
   public_id      String
   url            String
   secure_url     String

@@ -14,7 +14,7 @@ const NavBar = () => {
     }
 
   return (
-    <div className='flex flex-row justify-between p-4 items-center'>
+    <div className='flex flex-row justify-between items-center'>
         <div>
         <Link href="/">
             <Button variant="outline">Gallery</Button>
@@ -27,7 +27,7 @@ const NavBar = () => {
                 <Link href="/photos">
                     <Button className='rounded-sm' variant="outline">Album</Button>
                 </Link>
-                <Link href="/upload">
+                <Link href="/upload-img">
                     <Button className='rounded-sm' variant="outline">Upload</Button>
                 </Link>
                 <Button onClick={handleSignOut} className='rounded-md' variant="destructive">Log out</Button>
