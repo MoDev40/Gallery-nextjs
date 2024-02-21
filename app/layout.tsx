@@ -18,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`w-[1120px] mx-auto p-4 ${inter.className}`}>
+      <body className={`w-full md:w-[1120px] md:mx-auto p-4 ${inter.className}`}>
         <Providers>
         <NavBar/>
         {children}

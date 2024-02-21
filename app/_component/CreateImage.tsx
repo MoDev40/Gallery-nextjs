@@ -1,11 +1,13 @@
 "use client"
 import { Button } from '@/components/ui/button'
 import axios from 'axios'
+import { Upload } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import React, { ChangeEvent, FormEvent, useState } from 'react'
 
-const CreateImage = () => {
+const CreateImage = ({id}:{id:string}) => {
     const [image,setImage] = useState<File|null>()
-
+    const router = useRouter()
     const handleChange = (e:ChangeEvent<HTMLInputElement>)=>{
         const files = e.target.files
         if(files && files?.length > 0){
@@ -19,21 +21,23 @@ const CreateImage = () => {
         const formData = new FormData()
         if(image){
           formData.append('image',image)
-          const res = await axios.post('/api/photos/create',formData,{
+          formData.append('userId',id)
+          await axios.post('/api/photos/create',formData,{
             headers:{'Content-Type':'multipart/form-data'}
+          }).then(()=>{
+            router.refresh()
           })
-          console.log(res.data)
         }
       } catch (error) {
         console.log(error)
       }
     }
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className='item-center'>
         <input type="file" name='image' accept="image/*" onChange={handleChange}/>
         {
           image&&
-          <Button type="submit">Upload</Button>
+          <Button type="submit" className='p-2' variant="outline"><Upload/></Button>
         }
     </form>
   )
