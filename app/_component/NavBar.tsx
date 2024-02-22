@@ -14,7 +14,7 @@ const NavBar = () => {
     }
 
   return (
-    <div className='flex flex-row justify-between items-center'>
+    <div className='w-full md:w-[1120px] md:mx-auto p-4 flex flex-row justify-between items-center'>
         <div>
         <Link href="/">
             <Button variant="outline">Gallery</Button>
@@ -24,9 +24,6 @@ const NavBar = () => {
         { data?.user?
         (
             <div className='space-x-2'>
-                <Link href="/photos">
-                    <Button className='rounded-sm' variant="outline">Album</Button>
-                </Link>
                 <Link href="/upload-img">
                     <Button className='rounded-sm' variant="outline">Upload</Button>
                 </Link>

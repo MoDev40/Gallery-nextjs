@@ -1,23 +1,19 @@
-import prisma from "@/lib/client";
 import { NextRequest,NextResponse } from "next/server";
-
-export async function GET(req:NextRequest,{params}:{params:{param:string[]}}){
+import prisma from "@/lib/client";
+export async function GET(req:NextRequest,{params}:{params:{pageNum:string}}){
     try {
-        const [id,pageNum]  = params.param
-        const toNum : number = Number(pageNum) 
+        const toNum = Number(params.pageNum)
         const photos = await prisma.image.findMany({
+            take:6,
             skip:(toNum-1)*toNum,
-            take:5,
             orderBy:{
                 createdAt:"desc"
-            },
-            where:{
-                user_Id:id
             }
         })
         if(!photos){
             return NextResponse.json({message:"Not found anything!"},{status:404})
         }
+        
         return NextResponse.json({photos},{status:200})
     } catch (error:any) {
         return NextResponse.json({message:error.message,error},{status:500})

@@ -1,4 +1,4 @@
-export interface Photo {
+export interface SinglePhoto {
     id: string;
     public_id: string;
     url: string;
@@ -8,5 +8,5 @@ export interface Photo {
     user_Id: string;
 }
 export interface ResponseType {
-    photos:Photo[]
+    photos:SinglePhoto[]
 }
