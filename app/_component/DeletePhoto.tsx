@@ -1,5 +1,6 @@
 'use client'
 import { Button } from '@/components/ui/button'
+import { ApiURL } from '@/lib/config'
 import axios from 'axios'
 import { Loader, Trash2Icon } from 'lucide-react'
 import React, { FC, useState } from 'react'
@@ -18,7 +19,7 @@ const DeletePhoto:FC<Props> = ({data}) => {
     const [isLoading,setIsLoading] = useState<boolean>(false)
     const handleDelete = async ()=>{
         setIsLoading(true)
-        await axios.delete("/api/photos/delete",{data})
+        await axios.delete(`${ApiURL}/api/photos/delete`,{data})
         .then(()=>{window.location.reload()})
         .catch(()=>{})
         .finally(()=>{ 

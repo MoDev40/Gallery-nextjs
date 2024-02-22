@@ -7,6 +7,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { useSession } from 'next-auth/react';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { ApiURL } from '@/lib/config';
 const fetcher: Fetcher<any, string> = (url): Promise<ResponseType> =>
   fetch(url,{cache:"no-cache"}).then((res) => res.json());
 
@@ -14,7 +15,7 @@ const Photos = () => {
   const [pageNum, setPageNum] = useState<number>(1);
   const {data:user} = useSession()
   const { data, isLoading } = useSWR<ResponseType>(
-    `http://localhost:3000/api/photos/find/all/${pageNum}`,
+    `${ApiURL}/api/photos/find/all/${pageNum}`,
     fetcher
   );
 

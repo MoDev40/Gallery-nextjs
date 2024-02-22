@@ -1,5 +1,6 @@
 "use client"
 import { Button } from '@/components/ui/button'
+import { ApiURL } from '@/lib/config'
 import axios from 'axios'
 import { Loader, Upload } from 'lucide-react'
 import React, { ChangeEvent, FormEvent, useState } from 'react'
@@ -22,7 +23,7 @@ const CreateImage = ({id}:{id:string}) => {
         if(image){
           formData.append('image',image)
           formData.append('userId',id)
-          await axios.post('/api/photos/create',formData,{
+          await axios.post(`${ApiURL}/api/photos/create`,formData,{
             headers:{'Content-Type':'multipart/form-data'}
           }).then(()=>{
             window.location.reload()

@@ -7,12 +7,13 @@ import { useState } from "react"
 import { Skeleton } from "@/components/ui/skeleton"
 import DeletePhoto from "./DeletePhoto"
 import Link from "next/link"
+import { ApiURL } from "@/lib/config"
 
 const fetcher : Fetcher<any,string> = (url) : Promise<ResponseType> => fetch(url,{cache:"no-cache"}).then((res) => res.json());
 
 const UserPhotos = ({id}:{id:string}) => {
   const [pageNum,setPageNum] = useState<number>(1)
-  const {data,isLoading} = useSWR<ResponseType>(`http://localhost:3000/api/photos/find/user-photo/${id}/${pageNum}`,fetcher)
+  const {data,isLoading} = useSWR<ResponseType>(`${ApiURL}/api/photos/find/user-photo/${id}/${pageNum}`,fetcher)
   const handlePrev = ()=>{
     if(pageNum != 1){
       setPageNum((prev)=>prev-1)
