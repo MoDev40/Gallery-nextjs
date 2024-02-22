@@ -1,1 +1,0 @@
-export const ApiURL = process.env.DOMAIN_URL as string
