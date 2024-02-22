@@ -1,11 +1,12 @@
 'use client'
 import { Button } from "@/components/ui/button"
 import { ResponseType } from "../config/interface"
-import { ArrowLeft, ArrowRight, Edit } from "lucide-react"
+import { ArrowLeft, ArrowRight, Eye } from "lucide-react"
 import useSWR, { Fetcher } from "swr"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { Skeleton } from "@/components/ui/skeleton"
 import DeletePhoto from "./DeletePhoto"
+import Link from "next/link"
 
 const fetcher : Fetcher<any,string> = (url) : Promise<ResponseType> => fetch(url,{cache:"no-cache"}).then((res) => res.json());
 
@@ -21,10 +22,10 @@ const UserPhotos = ({id}:{id:string}) => {
       isLoading ? (
         <SkeletonUserPhotos/>
       ):
-    <div className="flex flex-col space-y-6 p-4">
+    <div className="w-full flex flex-col space-y-6 p-4">
       {data&&
         data.photos.map(photo =>(
-          <div key={photo.id} className="flex flex-row justify-between space-x-4">
+          <div key={photo.id} className="flex w-full flex-row justify-between space-x-4">
             <div>
             <img className="w-[50px] h-[50px]" src={photo.url||photo.secure_url} alt="cloudinary/photos"/>
             </div>
@@ -33,7 +34,7 @@ const UserPhotos = ({id}:{id:string}) => {
               <span>{new Date(photo.createdAt).toLocaleDateString()}</span>
             </div>
             <div className="flex flex-row">
-              <Button className="rounded-r-none p-2" variant="outline"><Edit/></Button>
+              <Link href={photo.url} target="blank" className="rounded-r-none bg-white p-2"><Eye/></Link>
               <DeletePhoto  data={{public_id:photo.public_id,userId:photo.user_Id,photoId:photo.id}}/>
             </div>
           </div>

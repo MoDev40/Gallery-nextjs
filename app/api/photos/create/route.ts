@@ -1,3 +1,4 @@
+import cloudinary from "@/app/config/cloudinary";
 import uploader from "@/app/config/uploader";
 import prisma from "@/lib/client";
 import { UploadApiResponse } from "cloudinary";
@@ -21,9 +22,10 @@ export async function POST(req:NextRequest){
         }) 
         
         if(!storedImg){
-            
+            await cloudinary.uploader.destroy(res.public_id)
             return NextResponse.json({message:"Upload Failed"},{status:400})
         }
+        
         return NextResponse.json({message:"Upload successfully"},{status:201})
     } catch (error:any) {
         return NextResponse.json({message:error.message},{status:500})

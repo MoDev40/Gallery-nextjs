@@ -1,20 +1,18 @@
 'use client'
-import React, { useEffect, useRef, useState } from 'react';
+import React, {useState } from 'react';
 import useSWR, { Fetcher } from 'swr';
-import { ResponseType, SinglePhoto } from '../config/interface';
+import { ResponseType } from '../config/interface';
 import Photo from './Photo';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useSession } from 'next-auth/react';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 const fetcher: Fetcher<any, string> = (url): Promise<ResponseType> =>
   fetch(url,{cache:"no-cache"}).then((res) => res.json());
 
 const Photos = () => {
   const [pageNum, setPageNum] = useState<number>(1);
   const {data:user} = useSession()
-  const router = useRouter()
   const { data, isLoading } = useSWR<ResponseType>(
     `http://localhost:3000/api/photos/find/all/${pageNum}`,
     fetcher
@@ -31,7 +29,7 @@ const Photos = () => {
       {isLoading ? (
         <SkeletonPhotos/>
       ) : (
-        <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
+        <div className='grid grid-cols-2 md:px-8 md:grid-cols-3 lg:grid-cols-4 gap-4'>
           {data &&
             data.photos.map((photo, index) => (
               <Photo key={index} photo={photo} />
@@ -49,11 +47,11 @@ const Photos = () => {
 export default Photos;
 
 export const SkeletonPhotos = ()=>{
-  return <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-4'>
+  return <div className='grid grid-cols-2 lg:grid-cols-3 gap-4'>
   {Array.from({ length: 6 }).map((_, index) => (
     <Skeleton
       key={index}
-      className='md:w-[300px] h-[350px] relative animate-pulse bg-gray-300'
+      className='lg:w-[300px] h-[350px] relative animate-pulse bg-gray-300'
     />
   ))}
 </div>
