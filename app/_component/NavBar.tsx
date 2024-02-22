@@ -1,8 +1,10 @@
 'use client'
 import { Button } from '@/components/ui/button'
+import { Skeleton } from '@/components/ui/skeleton'
 import { signIn, signOut, useSession } from 'next-auth/react'
 import Link from 'next/link'
 import React from 'react'
+
 const NavBar = () => {
     const {data} = useSession()
 
@@ -22,7 +24,7 @@ const NavBar = () => {
         </div>
         <div className='space-x-3'>
         { data?.user?
-        (
+        (   
             <div className='space-x-2'>
                 <Link href="/upload-img">
                     <Button className='rounded-sm' variant="outline">Upload</Button>
@@ -40,3 +42,20 @@ const NavBar = () => {
 }
 
 export default NavBar
+
+export const SkeletonNavs = () => {
+  return (
+    <div className='w-full md:w-[1120px] md:mx-auto p-4 flex flex-row justify-between items-center'>
+      <div>
+          <Button variant='outline'>
+            <Skeleton className='w-[80px] h-[32px]' />
+          </Button>
+      </div>
+      <div className='space-x-3'>
+        <Button className='rounded-sm' variant='outline'>
+          <Skeleton className='w-[152px] h-[32px]' />
+        </Button>
+      </div>
+    </div>
+  );
+};

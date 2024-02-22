@@ -1,48 +1,29 @@
 'use client'
 import { Button } from "@/components/ui/button"
-import { ResponseType, SinglePhoto } from "../config/interface"
-import { Edit,Trash2Icon } from "lucide-react"
+import { ResponseType } from "../config/interface"
+import { ArrowLeft, ArrowRight, Edit } from "lucide-react"
 import useSWR, { Fetcher } from "swr"
 import { useEffect, useState } from "react"
 import { Skeleton } from "@/components/ui/skeleton"
+import DeletePhoto from "./DeletePhoto"
 
-const fetcher : Fetcher<any,string> = (url) : Promise<ResponseType> => fetch(url, { cache: 'no-cache' }).then((res) => res.json());
+const fetcher : Fetcher<any,string> = (url) : Promise<ResponseType> => fetch(url,{cache:"no-cache"}).then((res) => res.json());
 
 const UserPhotos = ({id}:{id:string}) => {
   const [pageNum,setPageNum] = useState<number>(1)
-  const [photos,setPhotos] = useState<SinglePhoto[]>()
-
   const {data,isLoading} = useSWR<ResponseType>(`http://localhost:3000/api/photos/find/user-photo/${id}/${pageNum}`,fetcher)
-  
-  useEffect(() => {
-    if (data && data.photos) {
-      setPhotos((prevPhotos) => [...(prevPhotos||[]), ...data.photos]);
+  const handlePrev = ()=>{
+    if(pageNum != 1){
+      setPageNum((prev)=>prev-1)
     }
-  }, [data]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
-
-      if (scrollHeight - scrollTop === clientHeight) {
-        setPageNum((prevPageNum) => prevPageNum + 1);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  },[]);
-
+  }
   return (
       isLoading ? (
-        <SkeletonPhotos/>
+        <SkeletonUserPhotos/>
       ):
-      <div className="h-screen">
-      {photos&&
-        photos.map(photo =>(
+    <div className="flex flex-col space-y-6 p-4">
+      {data&&
+        data.photos.map(photo =>(
           <div key={photo.id} className="flex flex-row justify-between space-x-4">
             <div>
             <img className="w-[50px] h-[50px]" src={photo.url||photo.secure_url} alt="cloudinary/photos"/>
@@ -53,18 +34,22 @@ const UserPhotos = ({id}:{id:string}) => {
             </div>
             <div className="flex flex-row">
               <Button className="rounded-r-none p-2" variant="outline"><Edit/></Button>
-              <Button className="rounded-l-none p-2" variant="destructive"><Trash2Icon/></Button>
+              <DeletePhoto  data={{public_id:photo.public_id,userId:photo.user_Id,photoId:photo.id}}/>
             </div>
           </div>
         ))
       }
+      <div className="flex justify-between">
+        <Button variant="outline" onClick={handlePrev}>{pageNum != 1 &&<ArrowLeft/>}</Button>
+        <Button variant="outline" onClick={()=>{setPageNum((prev)=>prev+1)}}><ArrowRight/></Button>
+      </div>
     </div>
   )
 }
 
 export default UserPhotos
 
-export const SkeletonPhotos = () => (
+export const SkeletonUserPhotos = () => (
   <div>
     {[1, 2, 3, 4].map((index) => (
       <div key={index} className="flex flex-row justify-between space-x-4">

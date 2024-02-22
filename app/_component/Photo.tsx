@@ -13,7 +13,7 @@ const Photo = ({photo}:{photo:SinglePhoto}) => {
 
   },[])
   return (
-    <div className="md:w-[300px] h-[350px] relative" style={bg}>
+    <div className="md:w-[250px] h-[300px] relative" style={bg}>
       <div className="flex flex-row absolute p-2 capitalize left-0 right-0 bottom-0 justify-between bg-[rgba(0,0,0,0.5)] text-white">
         <span>{photo.resource_type}</span>
         <span>{(photo.createdAt.toString()).split("T")[0]}</span>

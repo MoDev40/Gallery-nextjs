@@ -4,8 +4,8 @@ export async function GET(req:NextRequest,{params}:{params:{pageNum:string}}){
     try {
         const toNum = Number(params.pageNum)
         const photos = await prisma.image.findMany({
-            take:6,
-            skip:(toNum-1)*toNum,
+            take:8,
+            skip:(toNum-1)*8,
             orderBy:{
                 createdAt:"desc"
             }
