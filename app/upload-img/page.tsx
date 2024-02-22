@@ -3,6 +3,8 @@ import CreateImage from '../_component/CreateImage'
 import { getUserSession } from '@/lib/session'
 import UserPhotos from '../_component/UserPhotos'
 
+export const dynamic = 'force-dynamic'
+
 const UploadPage = async() => {
   const session = await getUserSession()
   return (
