@@ -12,7 +12,7 @@ const fetcher : Fetcher<any,string> = (url) : Promise<ResponseType> => fetch(url
 
 const UserPhotos = ({id}:{id:string}) => {
   const [pageNum,setPageNum] = useState<number>(1)
-  const {data,isLoading} = useSWR<ResponseType>(`$/api/photos/find/user-photo/${id}/${pageNum}`,fetcher)
+  const {data,isLoading} = useSWR<ResponseType>(`/api/photos/find/user-photo/${id}/${pageNum}`,fetcher)
   const handlePrev = ()=>{
     if(pageNum != 1){
       setPageNum((prev)=>prev-1)
