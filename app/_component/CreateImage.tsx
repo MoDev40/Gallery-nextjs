@@ -23,7 +23,6 @@ const CreateImage = ({id}:{id:string}) => {
           formData.append('image',image)
           formData.append('userId',id)
           await axios.post(`/api/photos/create`,formData,{
-            headers:{'Content-Type':'multipart/form-data'}
           }).then(()=>{
             window.location.reload()
           }).finally(()=>{

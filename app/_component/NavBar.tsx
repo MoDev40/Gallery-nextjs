@@ -2,9 +2,11 @@
 import { Button } from '@/components/ui/button'
 import { signIn, signOut, useSession } from 'next-auth/react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 
 const NavBar = () => {
+    const router = useRouter()
     const {data} = useSession()
 
     const handleSignIn = async()=>{
@@ -12,6 +14,7 @@ const NavBar = () => {
     }
     const handleSignOut = async()=>{
         await signOut()
+        router.push("/")
     }
 
   return (
